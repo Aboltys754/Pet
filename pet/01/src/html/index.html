@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=cp1251" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">    
     <title>Document</title>
@@ -14,12 +14,12 @@
         <form action="" method="get" class="hidden" class="form-example" id="formNewContact">
             <div class="form-example">
               <label for="name">Введите Имя Контакта: </label>
-              <input type="text" name="name" id="name" oninput="inputName()" required/>
+              <input type="text" name="name" id="name" required/>
               <span class="error" aria-live="polite"></span>
             </div>
             <div class="form-example">
               <label for="tel">Введите номер телефона: </label>
-              <input type="tel" name="tel" id="tel" oninput="inputTel()" required/>
+              <input type="tel" name="tel" id="tel" required/>
               <span class="error" aria-live="polite"></span>
             </div>
             <div class="form-example">
@@ -28,16 +28,7 @@
           </form>
     </div>
     <div id="table-menu" >
-        <div class="subscriber">
-            <div class="table">
-                <p>Иванов Иван Иваныч</p>
-                <p>+78001234567</p>     
-            </div>
-            <div class="button">
-                <button><img src="./img/edit.svg" alt="изменить" onclick="edit_contact()"> </button>
-                <button><img src="./img/delete.svg" alt="удалить" onclick="delet_contact()"> </button>
-            </div>
-        </div>             
+                     
     </div>
     <script src="./code.js"></script>    
 </body>

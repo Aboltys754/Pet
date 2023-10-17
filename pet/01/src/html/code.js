@@ -1,34 +1,62 @@
 const tableMenu = document.getElementById('table-menu');
 const topMenu = document.getElementById('top-menu');
 const formNewContact = document.getElementById('formNewContact');
-const name = document.getElementById('name');
-const tel = document.getElementById('tel');
 const nameError = document.querySelector("#name + span.error");
 const telError = document.querySelector("#tel + span.error");
 
 
-name.addEventListener("input", function (event) {
-    console.log(event.target)
-    // Каждый раз, когда пользователь что-то вводит,
-    // мы проверяем, являются ли поля формы валидными
-  
-    if (name.validity.valid) {
-      // Если на момент валидации какое-то сообщение об ошибке уже отображается,
-      // если поле валидно, удаляем сообщение
-      nameError.textContent = ""; // Сбросить содержимое сообщения
-      nameError.className = "error"; // Сбросить визуальное состояние сообщения
-    } else {
-      // Если поле не валидно, показываем правильную ошибку
-    //   showError();
-        Console.log("asdas")
+
+async function create_table_contact() {
+    const table_contact = []
+    let res = await fetch ('http://localhost:3000/', {
+        method: 'POST',
+        headers: {
+            Authentication: 'create'
+        }
+    })
+    if (res.ok) {
+        let json = await res.json();
+        tableMenu.textContent = '';
+        json.map((value, index) => {
+            let divSubscriber = document.createElement('div');
+            let divTable = document.createElement('div');
+            let divButton = document.createElement('div');           
+
+            divTable.className = 'table';
+            divTable.insertAdjacentHTML('beforeend', `<p>${value.name}</p>`);
+            divTable.insertAdjacentHTML('beforeend', `<p>${value.tel}</p>`);
+
+            divButton.className = 'button';
+            divButton.insertAdjacentHTML('beforeend', '<button><img src="./img/edit.svg" alt="изменить" onclick="edit_contact()"> </button>')
+            divButton.insertAdjacentHTML('beforeend', '<button><img src="./img/delete.svg" alt="удалить" onclick="delet_contact()"> </button>')
+
+            divSubscriber.className = 'subscriber';
+            divSubscriber.id = value.id
+            divSubscriber.append(divTable);
+            divSubscriber.append(divButton);
+            
+            tableMenu.append(divSubscriber);
+        })
     }
-  });
+};
+
+create_table_contact();
+
 
 
 async function add_contact() {
-    const tableMenu = document.getElementById('table-menu');
-    const topMenu = document.getElementById('top-menu');
+    const tableMenu = document.getElementById('table-menu');    
     const formNewContact = document.getElementById('formNewContact');
+    const inputName = document.getElementById('name');
+    const inputTel = document.getElementById('tel');
+    const nameError = document.querySelector("#name + span.error");
+    const telError = document.querySelector("#tel + span.error");
+
+    inputName.value = '';
+    inputTel.value = '';
+    nameError.textContent = '';
+    telError.textContent = '';
+
     topMenu.classList.toggle('hidden');
     tableMenu.classList.toggle('hidden');
     formNewContact.classList.toggle('hidden');
@@ -43,7 +71,7 @@ async function submit_contact() {
     const nameError = document.querySelector("#name + span.error");
     const telError = document.querySelector("#tel + span.error");
 
-    console.log(name.value.length)
+    // console.log(name.value.length)
     if (name.validity.valueMissing) {
         nameError.textContent = "Пустое поле"
         return
@@ -53,14 +81,16 @@ async function submit_contact() {
         return
     }
 
+    let respon = await fetch(`http://localhost:3000/?name=${name.value}&tel=${tel.value}`);
+    if (respon.ok) {
+        await create_table_contact();
+    }
+
     topMenu.classList.toggle('hidden');
     tableMenu.classList.toggle('hidden');
     formNewContact.classList.toggle('hidden');
     
-    let respon = await fetch(`http://localhost:3000/?name=${name.value}&tel=${tel.value}`);
-    // if (respon.ok) {
-    //     window.location.href = 'http://localhost:3000/'
-    // }
+    
 }
 
 function inputName() {
