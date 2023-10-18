@@ -18,51 +18,19 @@ const temp_list = [
 ];
 
 
-app.use(async (ctx, next) => {
-    if (ctx.method === 'GET' && ctx.url.includes('name')) {
-        const newName = ctx.url.slice(ctx.url.indexOf('=') + 1, ctx.url.indexOf('&'));
-        const newTel = ctx.url.slice(ctx.url.indexOf('&') + 5);
-        console.log(ctx)
-        console.log(newName)
-        console.log(newTel)
-        const idTempList = temp_list.length;
-        const temp_obj = {
-            id: idTempList,
-            name: newName,
-            tel: newTel,
-        }
-        temp_list.push(temp_obj);
-        await next();
-        return;
-    }
+app.use(async (ctx, next) => {   
     
-    // if (ctx.method === 'POST') {
-    //     fs.readFile('./src/html/index.html', 'utf8', (err, data) => {
-    //         if (err) {
-    //             console.log('Ошибка', err);
-    //             return;
-    //         }
-    //         console.log(ctx.request);
-    //     })
-    //     console.log("1")
-    //     await next();
-    // }
+    if (ctx.method === 'POST' && ctx.request.header.authentication === 'createTable') {
+        console.log('createTable');
+        ctx.body = temp_list;
+    }
 
-    // if (ctx.method === 'GET' && ctx.url === '/')
-    //     await fs.readFile('./src/html/index.html', 'utf8', (err, data) => {
-    //             if (err) {
-    //                 console.log('Ошибка', err);
-    //                 return;
-    //             }
-    //             console.log(typeof data);
-    //         console.log(ctx.method, ctx.url);
-    //         })
-            
-    // await next();
+    if (ctx.method === 'POST' && ctx.request.header.authentication === 'createContact') {
+        console.log('createContact')
+        console.log(ctx);
 
-    if (ctx.method === 'POST' && ctx.request.header.authentication) {
-
-        ctx.body = temp_list
+        ctx.response.status = 200;
+        ctx.response.message = 'ok';
     }
 
     await next();

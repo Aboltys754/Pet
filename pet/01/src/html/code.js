@@ -5,13 +5,13 @@ const nameError = document.querySelector("#name + span.error");
 const telError = document.querySelector("#tel + span.error");
 
 
-
+// Запрос на сервер и на основе полученных данных отрисовка таблицы контактов
 async function create_table_contact() {
     const table_contact = []
     let res = await fetch ('http://localhost:3000/', {
         method: 'POST',
         headers: {
-            Authentication: 'create'
+            Authentication: 'createTable'
         }
     })
     if (res.ok) {
@@ -43,7 +43,7 @@ async function create_table_contact() {
 create_table_contact();
 
 
-
+// Скрывает форму таблицы контактов и отображение формы создания нового контакта
 async function add_contact() {
     const tableMenu = document.getElementById('table-menu');    
     const formNewContact = document.getElementById('formNewContact');
@@ -62,6 +62,8 @@ async function add_contact() {
     formNewContact.classList.toggle('hidden');
 };
 
+
+// Запрос на добовление нового контакта
 async function submit_contact() {    
     const tableMenu = document.getElementById('table-menu');
     const topMenu = document.getElementById('top-menu');
@@ -71,7 +73,6 @@ async function submit_contact() {
     const nameError = document.querySelector("#name + span.error");
     const telError = document.querySelector("#tel + span.error");
 
-    // console.log(name.value.length)
     if (name.validity.valueMissing) {
         nameError.textContent = "Пустое поле"
         return
@@ -81,9 +82,16 @@ async function submit_contact() {
         return
     }
 
-    let respon = await fetch(`http://localhost:3000/?name=${name.value}&tel=${tel.value}`);
+    let respon = await fetch(`http://localhost:3000/`, {
+        method: 'POST',
+        headers: {
+            Authentication: 'createContact'
+        },
+        body: new FormData(formNewContact)
+    });
     if (respon.ok) {
-        await create_table_contact();
+        // await create_table_contact();
+        console.log(111)
     }
 
     topMenu.classList.toggle('hidden');
