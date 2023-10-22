@@ -1,0 +1,75 @@
+*{margin: 0;}
+
+
+#top-menu {
+    padding: 10px;
+    margin-bottom: 10px;
+    border:  2px solid black;
+    background-color: rgb(184, 184, 184);
+}
+
+#top-menu  input {
+    width: 200px;
+}
+
+#create-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#create-form button {
+    width: 200px;
+}
+
+#formNewContact {
+    display:  flex;
+    flex-direction: row;
+}
+
+.form-example {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+
+
+#table-menu {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.subscriber {
+    display: flex;
+    margin: 3px 10px 3px 3px;
+}
+
+.table {
+    display: flex;
+    border: 2px solid black;
+    width: 400px;
+    margin-right: 10px;
+    justify-content: space-between;
+}
+
+.table p {
+    display: flex;
+    margin: 0 5px 0 5px;
+    align-items: center;
+}
+
+.tableEdit {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.editButton {
+    margin-left: 5px;
+}
+
+.hidden {
+    display: none !important;
+}
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=cp1251" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">    
+    <title>Document</title>
+</head>
+<body>
+    <div id="top-menu">
+        <input type="button" value="&#128101 добавить" onclick="add_contact()">
+    </div>
+    <div id="create-form" class="hidden">
+      <button id="button-back" onclick="add_contact()">Назад</button>
+        <form action="" method="get" class="form-example" id="formNewContact">
+            <div class="form-example">
+              <label for="name">Введите Имя Контакта: </label>
+              <input type="text" name="name" id="name" oninput="deletErrorText(event)" required/>
+              <span class="error" aria-live="polite"></span>
+            </div>
+            <div class="form-example">
+              <label for="tel">Введите номер телефона: </label>
+              <input type="tel" name="tel" id="tel" oninput="deletErrorText(event)" required/>
+              <span class="error" aria-live="polite"></span>
+            </div>
+            <div class="form-example">
+              <input type="button" value="Subscribe!" onclick="submit_contact()"/>
+            </div>
+          </form>
+    </div>
+    <div id="table-menu" >
+                     
+    </div>
+    <script src="./code.js"></script>    
+</body>
+</html>
