@@ -1,6 +1,5 @@
 const Koa = require('koa');
 const KoaStatic = require('koa-static');
-const Router = require('koa-router');
 const router = require('./routers/routers');
 const app = new Koa();
 
@@ -18,3 +17,5 @@ app.listen(3000, (error) => {
     console.log('Server start http://localhost:3000/')
 
 });
+
+
