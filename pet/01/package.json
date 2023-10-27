@@ -5,6 +5,7 @@
     "koa-bodyparser": "^4.4.1",
     "koa-router": "^11.0.2",
     "koa-static": "^5.0.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "pg": "^8.11.3"
   }
 }
