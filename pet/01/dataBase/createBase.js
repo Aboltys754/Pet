@@ -11,13 +11,18 @@ const data = {
 
 
 
-// создание базы
+// создание базы и таблицы
 (async () => { 
     let client = new Client(data);
-    client.connect();  
+    client.connect();
+    
+    await client.query('DROP DATABASE teldirect')
+        .then(async () => console.log("База удалена"))
+        .catch((error) => console.log(`База не удалена, ошибка: ${error.message}`));
+
     await client.query('CREATE DATABASE teldirect')
         .then(async () => console.log("База создалась"))
-        .catch((error) => console.log(error.message, 1));
+        .catch((error) => console.log(`База не создалась, ошибка: ${error.message}`));
 
     data.database = 'teldirect';
     
@@ -32,7 +37,7 @@ const data = {
         );
     `)
         .then(() => console.log('таблица создалась'))
-        .catch((error) => console.log(error.message, 2));
+        .catch((error) => console.log(`Таблица не создалась, ошибка:${error.message}`));
     process.exit();    
     
 })();
