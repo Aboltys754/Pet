@@ -27,21 +27,47 @@ async function dropContact(id) {
     client.connect();
 
     await client.query(`DELETE FROM contacts WHERE id='${id}';`)
-        .then(() => console.log('Запись удалена'))
+        .then((val) => {
+            if (val.rowCount === 0) {
+                throw new Error('Запись не найдена');
+            }
+            console.log('Запись удалена');
+        })
         .catch((error) => console.log(`Данные не удалены, ошибка: ${error.message}`))
         .finally(() => process.exit());
 };
 
 // изменение в базе
-async function changeContact() {
+async function changeContact(id, name, tel) {
     let client = new Client(data);
     client.connect();
 
-    await client.query(`DELETE FROM contacts WHERE id='${id}';`)
-        .then(() => console.log('Запись изменена'))
+    await client.query(`UPDATE contacts SET name='${name}', tel='${tel}' WHERE id='${id}';`)
+        .then((val) => {
+            if (val.rowCount === 0) {
+                throw new Error('Запись не найдена');
+            }
+            console.log('Запись изменена')
+        })
         .catch((error) => console.log(`Данные не изменены, ошибка: ${error.message}`))
         .finally(() => process.exit());
 }
 
+// Чтение из базы
+async function readingContacts() {
+        let client = new Client(data);
+        client.connect();
+
+        return client.query(`select * from contacts;`)
+            .then((value) => value.rows)
+            .catch((error) => console.log('Данные не получены, ошибка: ', error))
+            .finally(() => process.exit())
+}
+
+
 // addContact('вася', '+79525173357');
-dropContact(2);
+// dropContact(5);
+// changeContact(7, 'dfgfd', '65644654646');
+let foo = readingContacts();
+
+console.log(foo);

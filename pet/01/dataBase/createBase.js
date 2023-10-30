@@ -36,7 +36,7 @@ const data = {
             tel text NOT NULL
         );
     `)
-        .then(() => console.log('таблица создалась'))
+        .then(() => console.log('Таблица создалась'))
         .catch((error) => console.log(`Таблица не создалась, ошибка:${error.message}`));
     process.exit();    
     
