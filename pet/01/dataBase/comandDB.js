@@ -11,7 +11,7 @@ const data = {
 
 
 // Добавление в базу
-async function addContact(name, tel) {
+module.exports.addContact = async (name, tel) => {
     let client = new Client(data);
     client.connect();
 
@@ -22,7 +22,7 @@ async function addContact(name, tel) {
 };
 
 // Удаление из базы
-async function dropContact(id) {
+module.exports.dropContact = async(id) => {
     let client = new Client(data);
     client.connect();
 
@@ -38,7 +38,7 @@ async function dropContact(id) {
 };
 
 // изменение в базе
-async function changeContact(id, name, tel) {
+module.exports.changeContact = async(id, name, tel) => {
     let client = new Client(data);
     client.connect();
 
@@ -54,20 +54,18 @@ async function changeContact(id, name, tel) {
 }
 
 // Чтение из базы
-async function readingContacts() {
-        let client = new Client(data);
-        client.connect();
+module.exports.readingContacts = async() => {
+            let client = new Client(data);
+            client.connect();
 
-        return client.query(`select * from contacts;`)
+            return  await client.query(`select * from contacts;`)
             .then((value) => value.rows)
             .catch((error) => console.log('Данные не получены, ошибка: ', error))
-            .finally(() => process.exit())
-}
+        
+    }
 
+// console.log(readingContacts());
 
 // addContact('вася', '+79525173357');
 // dropContact(5);
 // changeContact(7, 'dfgfd', '65644654646');
-let foo = readingContacts();
-
-console.log(foo);
