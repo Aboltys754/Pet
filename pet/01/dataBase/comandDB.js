@@ -58,9 +58,9 @@ module.exports.readingContacts = async() => {
             let client = new Client(data);
             client.connect();
 
-            return  await client.query(`select * from contacts;`)
-            .then((value) => value.rows)
-            .catch((error) => console.log('Данные не получены, ошибка: ', error))
+            client.query(`select * from contacts;`)
+            .then((value) => {return value.rows})
+            .catch((error) => {return new Error(`Ошибка чтения из базы: ${error}`)})
         
     }
 

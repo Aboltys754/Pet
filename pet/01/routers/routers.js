@@ -4,13 +4,26 @@ const router = new Router();
 const comandDB = require('../dataBase/comandDB')
 
 
-const temp_list = [{id: '1', name: 'rjsds', tel: '89227338165'}];
+// const temp_list = [{id: '1', name: 'rjsds', tel: '89227338165'}];
 
 router.get(
     '/createTableContact',
-    (ctx) => {  ctx.body = temp_list;
+    (ctx) => {
         console.log('createTable')
-        ctx.body = temp_list;
+        new Promise(
+            comandDB.readingContacts()
+            .then((values) => {
+                console.log(values)
+                ctx.response.status = 200;
+                ctx.response.message = "data received";
+                ctx.body = JSON.stringify(values);
+            })
+            .catch((error) => {
+                ctx.response.status = 400;
+                ctx.response.message = `data acquisition error: ${error.message}`;
+            })
+        )
+        
 });
 
 router.post(
