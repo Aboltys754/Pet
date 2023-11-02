@@ -17,8 +17,7 @@ module.exports.addContact = async (name, tel) => {
 
     await client.query(`INSERT INTO contacts (name, tel) VALUES ('${name}', '${tel}');`)
         .then(() => console.log('Запись создана'))
-        .catch((error) => console.log(`Данные не добавлены, ошибка: ${error.message}`))
-        .finally(() => process.exit());
+        .catch((error) => console.log(`Данные не добавлены, ошибка: ${error.message}`));
 };
 
 // Удаление из базы
@@ -33,8 +32,7 @@ module.exports.dropContact = async(id) => {
             }
             console.log('Запись удалена');
         })
-        .catch((error) => console.log(`Данные не удалены, ошибка: ${error.message}`))
-        .finally(() => process.exit());
+        .catch((error) => console.log(`Данные не удалены, ошибка: ${error.message}`));
 };
 
 // изменение в базе
@@ -49,8 +47,7 @@ module.exports.changeContact = async(id, name, tel) => {
             }
             console.log('Запись изменена')
         })
-        .catch((error) => console.log(`Данные не изменены, ошибка: ${error.message}`))
-        .finally(() => process.exit());
+        .catch((error) => console.log(`Данные не изменены, ошибка: ${error.message}`));
 }
 
 // Чтение из базы
@@ -58,9 +55,9 @@ module.exports.readingContacts = async() => {
             let client = new Client(data);
             client.connect();
 
-            client.query(`select * from contacts;`)
-            .then((value) => {return value.rows})
-            .catch((error) => {return new Error(`Ошибка чтения из базы: ${error}`)})
+            return client.query(`select * from contacts;`)
+            .then((value) => value.rows)
+            .catch((error) =>  new Error(`Ошибка чтения из базы: ${error}`))
         
     }
 
