@@ -12,7 +12,7 @@ router.get(
         console.log('createTable')
             await comandDB.readingContacts()
             .then((values) => {
-                console.log(values, 1)
+                console.log(values)
                 ctx.body = values;
                 ctx.status = 200;
             })
@@ -26,8 +26,9 @@ router.post(
     koaBody({multipart: true}),    
     async (ctx) => {
         console.log('addContact')
-        comandDB.addContact(ctx.request.body.name, ctx.request.body.tel)
-        ctx.status = 200;
+        await comandDB.addContact(ctx.request.body.name, ctx.request.body.tel)
+        .then(ctx.status = 200)
+        
     });
 
 router.patch(
@@ -36,8 +37,8 @@ router.patch(
     async (ctx) => {
         console.log('editContact');          
         let bodyReq = JSON.parse(ctx.request.body);
-        comandDB.changeContact(bodyReq.id, bodyReq.name, bodyReq.tel);
-        ctx.status = 200;
+        await comandDB.changeContact(bodyReq.id, bodyReq.name, bodyReq.tel)
+        .then(ctx.status = 200)        
     }
 )
 
@@ -48,8 +49,8 @@ router.delete(
         console.log('deleteContact');        
         let indexUrl = ctx.request.URL.pathname.lastIndexOf("/");
         let idElem = ctx.request.URL.pathname.slice(indexUrl + 1);
-        comandDB.dropContact(idElem);
-        ctx.status = 200;
+        await comandDB.dropContact(idElem)
+        .then(ctx.status = 200);
     }
 )
 

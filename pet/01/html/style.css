@@ -32,6 +32,12 @@
     margin: 5px;
 }
 
+#search_menu {
+    border: 2px solid black;
+    margin-left: 10px;
+    padding: 5px;
+}
+
 
 
 #table-menu {

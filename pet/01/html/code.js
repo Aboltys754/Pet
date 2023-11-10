@@ -12,19 +12,26 @@ const activAtrribute = [false, null, null, null];
 
 
 // Запрос на сервер и на основе полученных данных отрисовка таблицы контактов
-async function create_table_contact() {
+async function get_table_contact() {
     let res = await fetch ('http://localhost:3000/createTableContact', {
     })
     if (res.ok) {
         let json = await res.json();
-        tableMenu.textContent = '';
-        json.map((value) => {
-            createTegsTable(value)
-        })
+        tableMenu.textContent = '';        
+        sessionStorage.storeJson = JSON.stringify(json);
+        create_table_contact();
     }
 };
 
-create_table_contact();
+get_table_contact();
+
+// Отрисовка на странице таблицы на основе данных взятых из sessionStorage
+async function create_table_contact() {
+    const data_contact = JSON.parse(sessionStorage.storeJson);
+    await data_contact.map((value) => {
+        createTegsTable(value)
+    })
+}
 
 
 // Скрывает форму таблицы контактов и отображение формы создания нового контакта
@@ -66,7 +73,7 @@ async function submit_contact() {
         body: new FormData(formNewContact)
     });
     if (respon.ok) {
-        create_table_contact();
+        await create_table_contact();
     }
 
     topMenu.classList.toggle('hidden');
@@ -168,11 +175,12 @@ async function editContact() {
         activAtrribute[1] = null;
         activAtrribute[2] = null;
         activAtrribute[3] = null;
-        create_table_contact();
+        await create_table_contact();
         return
     }
 }
 
+// отправка данных для удаление контакта
 async function delet_contact(event) {
     const elemId = event.target.parentElement.parentElement.parentElement.getAttribute('id')
     if (confirm('Вы точно хотите удалить контакт?') === true) {
@@ -181,7 +189,7 @@ async function delet_contact(event) {
     });
 
     if (respon.ok) {
-        create_table_contact();
+        await create_table_contact();
     };
     }
     
@@ -236,9 +244,19 @@ function deletErrorText(event) {
         event.target.nextSibling.nextSibling.textContent = '';
         return
     }
-    console.log(event.target.nextSibling)
     event.target.nextSibling.textContent = '';  
 }
 
-
-
+// поиск по набраному тексту
+function search_contact(event) {
+    const data_contact = JSON.parse(sessionStorage.storeJson);
+    let result = []
+    for (let i = 0; i < data_contact.length; i++) {
+        if (data_contact[i].name.indexOf(event.target.value) !== -1) {
+            result.push(data_contact[i])
+        }};
+    tableMenu.textContent = '';
+    result.map((value) => {
+        createTegsTable(value)
+    })
+}
