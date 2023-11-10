@@ -1,12 +1,13 @@
 const { Client } = require('pg');
+const config = require('../config');
 
 
 const data = {
-    user: 'postgres',
-    host: 'localhost',
+    user: config.postgres.user,
+    host: config.postgres.host,
     database: '',
-    password: 'postgres',
-    port: 5432,
+    password: config.postgres.password,
+    port: config.postgres.port,
 };
 
 
@@ -16,15 +17,15 @@ const data = {
     let client = new Client(data);
     client.connect();
     
-    await client.query('DROP DATABASE teldirect')
+    await client.query(`DROP DATABASE ${config.postgres.database}`)
         .then(async () => console.log("База удалена"))
         .catch((error) => console.log(`База не удалена, ошибка: ${error.message}`));
 
-    await client.query('CREATE DATABASE teldirect')
+    await client.query(`CREATE DATABASE ${config.postgres.database}`)
         .then(async () => console.log("База создалась"))
         .catch((error) => console.log(`База не создалась, ошибка: ${error.message}`));
 
-    data.database = 'teldirect';
+    data.database = config.postgres.database;
     
     client = new Client(data);
     client.connect();
