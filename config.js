@@ -6,5 +6,10 @@ module.exports = {
         database: 'teldirect',
         password: 'postgres',
         port: 5432, 
+    },
+    server: {
+        host: 'localhost',
+        port: 3000,
     }
+
 }
