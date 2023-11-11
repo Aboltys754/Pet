@@ -6,6 +6,7 @@ const errorCathcer = require('./middleware/error.cather');
 const app = new Koa();
 
 app.use(errorCathcer);
+// app.use(KoaStatic('./html'));
 app.use(phoneBookRoute);
 
 module.exports = app;

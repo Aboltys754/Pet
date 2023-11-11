@@ -12,5 +12,5 @@ module.exports = {
   rules: {
     'no-console': 0,
   },
-  ignorePatterns: ['*.test.js', 'fixtures/*', 'files/*', 'pet'],
+  ignorePatterns: ['*.test.js', 'fixtures/*', 'files/*', 'pet', 'html'],
 };

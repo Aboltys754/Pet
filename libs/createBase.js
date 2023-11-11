@@ -30,8 +30,9 @@ const data = {
   await client.query(`
         CREATE TABLE contacts (
             id SERIAL,
-            name text NOT NULL,
-            tel text NOT NULL
+            name TEXT NOT NULL,
+            tel TEXT NOT NULL,
+            createdData TIMESTAMP NOT NULL DEFAULT NOW()
         );
     `)
     .then(() => console.log('Таблица создалась'))
