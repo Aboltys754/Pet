@@ -1,9 +1,7 @@
 module.exports.id = async (ctx, next) => {
   const id = parseInt(ctx.params.id, 10);
   if (!id) {
-    ctx.status = 400;
-    ctx.body = 'error id';
-    return;
+    ctx.throw(400, 'error id');
   }
   await next();
 };
@@ -11,9 +9,7 @@ module.exports.id = async (ctx, next) => {
 module.exports.name = async (ctx, next) => {
   const name = ctx.request?.body?.name;
   if (!name || name.length < 3) {
-    ctx.status = 400;
-    ctx.body = 'little name';
-    return;
+    ctx.throw(400, 'little name');
   }
   await next();
 };
@@ -21,9 +17,7 @@ module.exports.name = async (ctx, next) => {
 module.exports.tel = async (ctx, next) => {
   const tel = ctx.request?.body?.tel;
   if (!tel || tel.length < 3) {
-    ctx.status = 400;
-    ctx.body = 'little tel';
-    return;
+    ctx.throw(400, 'little tel');
   }
   await next();
 };
