@@ -1,31 +1,43 @@
 const Router = require('koa-router');
+const { koaBody } = require('koa-body');
+
+const phoneBookValidator = require('../validators/phoneBook.validator');
 
 const router = new Router({ prefix: '/api/phoneBook' });
-const phoneBookControler = require('../controlers/phoneBook.controlers');
+const phoneBookController = require('../controllers/phoneBook.controllers');
 
 router.get(
   '/',
-  phoneBookControler.getAll,
+  phoneBookController.getAll,
 );
 
 router.get(
   '/:id',
-  phoneBookControler.get,
+  phoneBookValidator.id,
+  phoneBookController.get,
 );
 
 router.post(
   '/',
-  phoneBookControler.add,
+  koaBody({ multipart: true }),
+  phoneBookValidator.name,
+  phoneBookValidator.tel,
+  phoneBookController.add,
 );
 
 router.patch(
   '/:id',
-  phoneBookControler.upd,
+  koaBody({ multipart: true }),
+  phoneBookValidator.id,
+  phoneBookValidator.name,
+  phoneBookValidator.tel,
+  phoneBookController.upd,
 );
 
 router.delete(
   '/:id',
-  phoneBookControler.del,
+  phoneBookValidator.id,
+  phoneBookController.del,
 );
 
 module.exports = router.routes();
