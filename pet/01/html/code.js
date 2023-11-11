@@ -25,6 +25,7 @@ get_table_contact();
 // Отрисовка на странице таблицы на основе данных взятых из sessionStorage
 async function create_table_contact() {
   const data_contact = JSON.parse(sessionStorage.storeJson);
+  tableMenu.innerHTML = "";
   await data_contact.map((value) => {
     createTegsTable(value);
   });
@@ -58,9 +59,6 @@ async function submit_contact() {
     telError.textContent = 'Пустое поле';
     return;
   }
-  // if (validateTel(inputTel.value, telError) === false) {
-  //   return;
-  // }
 
   const respon = await fetch('http://localhost:3000/addContact', {
     method: 'POST',
@@ -68,11 +66,30 @@ async function submit_contact() {
   });
   if (respon.ok) {
     await create_table_contact();
+    topMenu.classList.toggle('hidden');
+    tableMenu.classList.toggle('hidden');
+    createForm.classList.toggle('hidden');
+  } else if (respon.status === 400) {
+    const error = await respon.text();
+    if (error === 'first element') {
+      telError.textContent = 'Телефон должен начинаться с символа + или числа 8';
+      return false;
+    }
+    if (error === 'second element') {
+      telError.textContent = 'Символы в телефоне не цифры со второго символа';
+      return false;
+    }
+    if (error === 'litеl tel') {
+      telError.textContent = 'Слишком короткий телефон';
+      return false;
+    }
+    if (error === 'long tel') {
+      telError.textContent = 'Слишком длинный телефон';
+      return false;
+    }
   }
 
-  topMenu.classList.toggle('hidden');
-  tableMenu.classList.toggle('hidden');
-  createForm.classList.toggle('hidden');
+  
 }
 
 function openFormEdit(event, elem = 'editButton') {
@@ -142,9 +159,6 @@ function openFormEdit(event, elem = 'editButton') {
 async function editContact() {
   const name = document.getElementById(`nameEdit-${activAtrribute[1]}`);
   const tel = document.getElementById(`telEdit-${activAtrribute[1]}`);
-  // if (validateTel(tel.value, tel.nextSibling) === false) {
-  //   return;
-  // }
 
   if (name.value.length === 0) {
     name.nextSibling.textContent = 'Поле не может быть пустым';
@@ -163,7 +177,7 @@ async function editContact() {
     activAtrribute[1] = null;
     activAtrribute[2] = null;
     activAtrribute[3] = null;
-    await create_table_contact();
+    await get_table_contact();
   }
 }
 
@@ -176,30 +190,11 @@ async function delet_contact(event) {
     });
 
     if (respon.ok) {
-      await create_table_contact();
+      await get_table_contact();
     }
   }
 }
 
-// Валидация формы ввода телефона
-function validateTel(tel, elemError) {
-  if (tel[0] !== '+' && tel[0] !== '8') {
-    elemError.textContent = 'Телефон должен начинаться с символа + или числа 8';
-    return false;
-  }
-  if (isNaN(tel.slice(1)) === true) {
-    elemError.textContent = 'Символы в телефоне не цифры со второго символа';
-    return false;
-  }
-  if (tel[0] === '+' && tel.length < 12 || tel[0] === '8' && tel.length < 11) {
-    elemError.textContent = 'Слишком короткий телефон';
-    return false;
-  }
-  if (tel[0] === '+' && tel.length > 12 || tel[0] === '8' && tel.length > 11) {
-    elemError.textContent = 'Слишком длинный телефон';
-    return false;
-  }
-}
 
 // создание елемента таблицы subscriber
 function createTegsTable(value) {

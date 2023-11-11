@@ -30,22 +30,22 @@ router.post(
     const tel = ctx.request.body.tel;
     console.log('addContact');
     if (tel[0] !== '+' && tel[0] !== '8') {
-      ctx.body = 'Телефон должен начинаться с символа + или числа 8';
+      ctx.body = 'first element';
       ctx.status = 400;
       return;
     }
     if (isNaN(tel.slice(1)) === true) {
-      ctx.body = 'Символы в телефоне не цифры со второго символа';
+      ctx.body = 'second element';
       ctx.status = 400;
       return;
     }
     if (tel[0] === '+' && tel.length < 12 || tel[0] === '8' && tel.length < 11) {
-      ctx.body = 'Слишком короткий телефон';
+      ctx.body = 'litеl tel';
       ctx.status = 400;
       return;
     }
     if (tel[0] === '+' && tel.length > 12 || tel[0] === '8' && tel.length > 11) {
-      ctx.body = 'Слишком длинный телефон';
+      ctx.body = 'long tel';
       ctx.status = 400;
       return;
     }
