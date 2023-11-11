@@ -1,6 +1,9 @@
 const config = require('./config');
 
 const app = require('./app');
+const phoneBookRoute = require('./routes/phoneBook.route');
+
+app.use(phoneBookRoute);
 
 app.listen(config.server.port, (error) => {
   if (error) {
@@ -9,4 +12,3 @@ app.listen(config.server.port, (error) => {
   }
   console.log(`start server ${config.server.port}`);
 });
-console.log(process.argv);

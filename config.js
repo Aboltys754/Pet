@@ -10,7 +10,7 @@ module.exports = {
     port: process.env.DB_PORT || 5432,
   },
   server: {
-    host: 'localhost',
+    host: process.env.SERVER_HOST || 'localhost',
     port: process.env.SERVER_PORT || 3000,
   },
 
