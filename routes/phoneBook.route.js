@@ -1,45 +1,31 @@
 const Router = require('koa-router');
 
 const router = new Router({ prefix: '/api/phoneBook' });
+const phoneBookControler = require('../controlers/phoneBook.controlers');
 
 router.get(
   '/',
-  async (ctx) => {
-    ctx.status = 200;
-    ctx.body = 'get function';
-  },
+  phoneBookControler.getAll,
 );
 
 router.get(
   '/:id',
-  async (ctx) => {
-    ctx.status = 200;
-    ctx.body = 'get function';
-  },
+  phoneBookControler.get,
 );
 
 router.post(
   '/',
-  async (ctx) => {
-    ctx.status = 201;
-    ctx.body = 'post function';
-  },
+  phoneBookControler.add,
 );
 
 router.patch(
   '/:id',
-  async (ctx) => {
-    ctx.status = 200;
-    ctx.body = 'patch function';
-  },
+  phoneBookControler.upd,
 );
 
 router.delete(
   '/:id',
-  async (ctx) => {
-    ctx.status = 200;
-    ctx.body = 'delete function';
-  },
+  phoneBookControler.del,
 );
 
 module.exports = router.routes();
