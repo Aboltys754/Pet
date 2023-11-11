@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Aboltys754/Pet#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "koa": "^2.14.2",
     "pg": "^8.11.3"
   },

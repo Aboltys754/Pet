@@ -9,3 +9,4 @@ app.listen(config.server.port, (error) => {
   }
   console.log(`start server ${config.server.port}`);
 });
+console.log(process.argv);
