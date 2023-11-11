@@ -12,6 +12,7 @@ const data = {
 module.exports.addContact = async (name, tel) => {
   const client = new Client(data);
   client.connect();
+ 
 
   await client.query(`INSERT INTO contacts (name, tel) VALUES ('${name}', '${tel}');`)
     .then(() => console.log('Запись создана'))

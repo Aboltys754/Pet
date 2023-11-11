@@ -58,9 +58,9 @@ async function submit_contact() {
     telError.textContent = 'Пустое поле';
     return;
   }
-  if (validateTel(inputTel.value, telError) === false) {
-    return;
-  }
+  // if (validateTel(inputTel.value, telError) === false) {
+  //   return;
+  // }
 
   const respon = await fetch('http://localhost:3000/addContact', {
     method: 'POST',
@@ -142,9 +142,9 @@ function openFormEdit(event, elem = 'editButton') {
 async function editContact() {
   const name = document.getElementById(`nameEdit-${activAtrribute[1]}`);
   const tel = document.getElementById(`telEdit-${activAtrribute[1]}`);
-  if (validateTel(tel.value, tel.nextSibling) === false) {
-    return;
-  }
+  // if (validateTel(tel.value, tel.nextSibling) === false) {
+  //   return;
+  // }
 
   if (name.value.length === 0) {
     name.nextSibling.textContent = 'Поле не может быть пустым';
