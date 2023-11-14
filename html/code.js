@@ -10,7 +10,7 @@ const activAtrribute = [false, null, null, null];
 
 // Запрос на сервер и на основе полученных данных отрисовка таблицы контактов
 async function get_table_contact() {
-  const res = await fetch('http://localhost:3000/createTableContact', {
+  const res = await fetch('http://localhost:3000/api/phoneBook', {
   });
   if (res.ok) {
     const json = await res.json();
@@ -60,12 +60,12 @@ async function submit_contact() {
     return;
   }
 
-  const respon = await fetch('http://localhost:3000/addContact', {
+  const respon = await fetch('http://localhost:3000/api/phoneBook', {
     method: 'POST',
     body: new FormData(formNewContact),
   });
   if (respon.ok) {
-    await create_table_contact();
+    await get_table_contact();
     topMenu.classList.toggle('hidden');
     tableMenu.classList.toggle('hidden');
     createForm.classList.toggle('hidden');
@@ -162,13 +162,12 @@ async function editContact() {
     name.nextSibling.textContent = 'Поле не может быть пустым';
     return;
   }
-  const respon = await fetch('http://localhost:3000/editContact', {
+  const formData = new FormData();
+  formData.append('name', name.value)
+  formData.append('tel', tel.value)
+  const respon = await fetch(`http://localhost:3000/api/phoneBook/${activAtrribute[1]}`, {
     method: 'PATCH',
-    body: JSON.stringify({
-      id: activAtrribute[1],
-      name: name.value,
-      tel: tel.value,
-    }),
+    body: formData,
   });
   if (respon.ok) {
     activAtrribute[0] = false;
@@ -183,7 +182,7 @@ async function editContact() {
 async function delet_contact(event) {
   const elemId = event.target.parentElement.parentElement.parentElement.getAttribute('id');
   if (confirm('Вы точно хотите удалить контакт?') === true) {
-    const respon = await fetch(`http://localhost:3000/deleteContact/${elemId}`, {
+    const respon = await fetch(`http://localhost:3000/api/phoneBook/${elemId}`, {
       method: 'DELETE',
     });
 
@@ -201,7 +200,7 @@ function createTegsTable(value) {
 
   divTable.className = 'table';
   divTable.insertAdjacentHTML('beforeend', `<p id="p1-${value.id}">${value.name}</p>`);
-  divTable.insertAdjacentHTML('beforeend', `<p id="p2-${value.id}">${value.tel}</p>`);
+  divTable.insertAdjacentHTML('beforeend', `<p id="p2-${value.id}">${value.phoneNumber}</p>`);
 
   divButton.className = 'button';
   divButton.insertAdjacentHTML('beforeend', '<button><img src="./img/edit.svg" alt="изменить" onclick="openFormEdit(event)"> </button>');

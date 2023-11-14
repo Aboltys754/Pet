@@ -1,3 +1,5 @@
+// const { parse } = require('dotenv');
+
 module.exports.id = async (ctx, next) => {
   const id = parseInt(ctx.params.id, 10);
   if (!id) {
@@ -15,7 +17,7 @@ module.exports.name = async (ctx, next) => {
 };
 
 module.exports.tel = async (ctx, next) => {
-  const tel = ctx.request?.body?.tel;
+  const tel = ctx.request?.body?.name;
   if (!tel || tel.length < 3) {
     ctx.throw(400, 'little tel');
   }

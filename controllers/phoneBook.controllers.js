@@ -26,6 +26,7 @@ module.exports.add = async (ctx) => {
 };
 
 module.exports.upd = async (ctx) => {
+  console.log(ctx.params.id);
   const result = await db.query(
     'UPDATE contacts SET name=$1, tel=$2 WHERE id=$3 RETURNING *',
     [
